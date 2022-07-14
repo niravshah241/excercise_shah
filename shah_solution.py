@@ -7,7 +7,7 @@ import time
 import sympy
 
 def eq_solve(mat_A, vec_b, solver=None):
-	'''Solves liear system of equation using specified solver
+	'''Solves linear system of equation using specified solver
 	Input:
 	mat_A (numpy array) : Matrix, with applied boundary conditions, corresponding to bilinear form
 	vec_b (numpy array) : vector, with applied boundary conditions, corresponding to linear form
@@ -40,21 +40,21 @@ def eval_elemental_matrix(x_step, y_step, pol_degree=1):
 	phi_b = x * (1-y)
 	phi_d = (1-x) * y
 	phi_c = x * y
-	elemental_matrix[0][0] = x_step * y_step * sympy.integrate(diff(phi_a,x)*diff(phi_a,x)/(hx**2)+diff(phi_a,y)*diff(phi_a,y)/(hy**2),(x,0,1),(y,0,1))
-	elemental_matrix[0][1] = x_step * y_step * sympy.integrate(diff(phi_a,x)*diff(phi_b,x)/(hx**2)+diff(phi_a,y)*diff(phi_b,y)/(hy**2),(x,0,1),(y,0,1))
-	elemental_matrix[0][2] = x_step * y_step * sympy.integrate(diff(phi_a,x)*diff(phi_d,x)/(hx**2)+diff(phi_a,y)*diff(phi_d,y)/(hy**2),(x,0,1),(y,0,1))
-	elemental_matrix[0][3] = x_step * y_step * sympy.integrate(diff(phi_a,x)*diff(phi_c,x)/(hx**2)+diff(phi_a,y)*diff(phi_c,y)/(hy**2),(x,0,1),(y,0,1))
-	elemental_matrix[1][1] = x_step * y_step * sympy.integrate(diff(phi_b,x)*diff(phi_b,x)/(hx**2)+diff(phi_b,y)*diff(phi_b,y)/(hy**2),(x,0,1),(y,0,1))
-	elemental_matrix[1][2] = x_step * y_step * sympy.integrate(diff(phi_b,x)*diff(phi_d,x)/(hx**2)+diff(phi_b,y)*diff(phi_d,y)/(hy**2),(x,0,1),(y,0,1))
-	elemental_matrix[1][3] = x_step * y_step * sympy.integrate(diff(phi_b,x)*diff(phi_c,x)/(hx**2)+diff(phi_b,y)*diff(phi_c,y)/(hy**2),(x,0,1),(y,0,1))
-	elemental_matrix[2][2] = x_step * y_step * sympy.integrate(diff(phi_d,x)*diff(phi_d,x)/(hx**2)+diff(phi_d,y)*diff(phi_d,y)/(hy**2),(x,0,1),(y,0,1))
-	elemental_matrix[2][3] = x_step * y_step * sympy.integrate(diff(phi_d,x)*diff(phi_c,x)/(hx**2)+diff(phi_d,y)*diff(phi_c,y)/(hy**2),(x,0,1),(y,0,1))
-	elemental_matrix[3][3] = x_step * y_step * sympy.integrate(diff(phi_c,x)*diff(phi_c,x)/(hx**2)+diff(phi_c,y)*diff(phi_c,y)/(hy**2),(x,0,1),(y,0,1))
+	elemental_matrix[0][0] = x_step * y_step * sympy.integrate(sympy.diff(phi_a,x)*sympy.diff(phi_a,x)/(x_step**2)+sympy.diff(phi_a,y)*sympy.diff(phi_a,y)/(y_step**2),(x,0,1),(y,0,1))
+	elemental_matrix[0][1] = x_step * y_step * sympy.integrate(sympy.diff(phi_a,x)*sympy.diff(phi_b,x)/(x_step**2)+sympy.diff(phi_a,y)*sympy.diff(phi_b,y)/(y_step**2),(x,0,1),(y,0,1))
+	elemental_matrix[0][2] = x_step * y_step * sympy.integrate(sympy.diff(phi_a,x)*sympy.diff(phi_d,x)/(x_step**2)+sympy.diff(phi_a,y)*sympy.diff(phi_d,y)/(y_step**2),(x,0,1),(y,0,1))
+	elemental_matrix[0][3] = x_step * y_step * sympy.integrate(sympy.diff(phi_a,x)*sympy.diff(phi_c,x)/(x_step**2)+sympy.diff(phi_a,y)*sympy.diff(phi_c,y)/(y_step**2),(x,0,1),(y,0,1))
+	elemental_matrix[1][1] = x_step * y_step * sympy.integrate(sympy.diff(phi_b,x)*sympy.diff(phi_b,x)/(x_step**2)+sympy.diff(phi_b,y)*sympy.diff(phi_b,y)/(y_step**2),(x,0,1),(y,0,1))
+	elemental_matrix[1][2] = x_step * y_step * sympy.integrate(sympy.diff(phi_b,x)*sympy.diff(phi_d,x)/(x_step**2)+sympy.diff(phi_b,y)*sympy.diff(phi_d,y)/(y_step**2),(x,0,1),(y,0,1))
+	elemental_matrix[1][3] = x_step * y_step * sympy.integrate(sympy.diff(phi_b,x)*sympy.diff(phi_c,x)/(x_step**2)+sympy.diff(phi_b,y)*sympy.diff(phi_c,y)/(y_step**2),(x,0,1),(y,0,1))
+	elemental_matrix[2][2] = x_step * y_step * sympy.integrate(sympy.diff(phi_d,x)*sympy.diff(phi_d,x)/(x_step**2)+sympy.diff(phi_d,y)*sympy.diff(phi_d,y)/(y_step**2),(x,0,1),(y,0,1))
+	elemental_matrix[2][3] = x_step * y_step * sympy.integrate(sympy.diff(phi_d,x)*sympy.diff(phi_c,x)/(x_step**2)+sympy.diff(phi_d,y)*sympy.diff(phi_c,y)/(y_step**2),(x,0,1),(y,0,1))
+	elemental_matrix[3][3] = x_step * y_step * sympy.integrate(sympy.diff(phi_c,x)*sympy.diff(phi_c,x)/(x_step**2)+sympy.diff(phi_c,y)*sympy.diff(phi_c,y)/(y_step**2),(x,0,1),(y,0,1))
 	elemental_matrix = elemental_matrix + elemental_matrix.T - np.diag(np.diag(elemental_matrix))
 	return elemental_matrix
 
 # Discretsation of domain: Domain is discretised with nx equidistant nodes in x-direction and ny equidistant nodes in y-direction. The corresponding step size in x-direction is hx=1/(nx-1) and step size in y-direction is hy=1/(ny-1). The cooordinates (x,y) of node in row i and column j is given by x = i*hx and y = i*hy.
-nx, ny = 100, 90 #number of steps in x and y directions
+nx, ny = 7,5#100, 90 #number of steps in x and y directions
 hx, hy = 1./(nx-1), 1./(ny-1) #step sizes in x and y directions
 x, y = np.linspace(0,1,nx), np.linspace(0,1,ny) # Mesh points in x and y directions
 xx, yy = np.meshgrid(x, y, sparse=True)
@@ -81,7 +81,10 @@ local_mat = \
 	[(-1./6.)*(hy/hx+hx/hy), (1./3.)*(hy/(2*hx)-hx/hy), (1./3.)*(hx/(2*hy)-hy/hx), (1./3.)*(hy/hx+hx/hy)]]) #for pol_degree=1
 
 # Alternate to manual code elemental matrix using smbolic computations (see function eval_elemental_matrix)
-# local_mat_sympy = eval_elemental_matrix(hx,hy,pol_degree=1)
+local_mat_sympy = eval_elemental_matrix(hx,hy,pol_degree=1)
+
+print(local_mat)
+print(local_mat_sympy)
 
 # Assembly of discretised bilinear form. Precisely below block places the elemental_matrix into global matrix based on global index of the node. Notice the advantage of symmetry during assembly.
 a_matrix2 = np.zeros([nx*ny,nx*ny]) # a_matrix is global bilinear matrix
