@@ -80,7 +80,7 @@ local_mat = \
 	[(1./3.)*(hy/(2*hx)-hx/hy), (-1./6.)*(hy/hx+hx/hy), (1./3.)*(hy/hx+hx/hy), (1./3.)*(hx/(2*hy)-hy/hx)],\
 	[(-1./6.)*(hy/hx+hx/hy), (1./3.)*(hy/(2*hx)-hx/hy), (1./3.)*(hx/(2*hy)-hy/hx), (1./3.)*(hy/hx+hx/hy)]]) #for pol_degree=1
 
-# Alternate to manual code elemental matrix using smbolic computations (see function eval_elemental_matrix)
+# Alternate to manual code elemental matrix using symbolic computations (see function eval_elemental_matrix)
 #local_mat_sympy = eval_elemental_matrix(hx,hy,pol_degree=1)
 
 # Assembly of discretised bilinear form. Precisely below block places the elemental_matrix into global matrix based on global index of the node. Notice the advantage of symmetry during assembly.
