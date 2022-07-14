@@ -54,7 +54,7 @@ def eval_elemental_matrix(x_step, y_step, pol_degree=1):
 	return elemental_matrix
 
 # Discretsation of domain: Domain is discretised with nx equidistant nodes in x-direction and ny equidistant nodes in y-direction. The corresponding step size in x-direction is hx=1/(nx-1) and step size in y-direction is hy=1/(ny-1). The cooordinates (x,y) of node in row i and column j is given by x = i*hx and y = i*hy.
-nx, ny = 7,5#100, 90 #number of steps in x and y directions
+nx, ny = 100, 90 #number of steps in x and y directions
 hx, hy = 1./(nx-1), 1./(ny-1) #step sizes in x and y directions
 x, y = np.linspace(0,1,nx), np.linspace(0,1,ny) # Mesh points in x and y directions
 xx, yy = np.meshgrid(x, y, sparse=True)
@@ -81,10 +81,7 @@ local_mat = \
 	[(-1./6.)*(hy/hx+hx/hy), (1./3.)*(hy/(2*hx)-hx/hy), (1./3.)*(hx/(2*hy)-hy/hx), (1./3.)*(hy/hx+hx/hy)]]) #for pol_degree=1
 
 # Alternate to manual code elemental matrix using smbolic computations (see function eval_elemental_matrix)
-local_mat_sympy = eval_elemental_matrix(hx,hy,pol_degree=1)
-
-print(local_mat)
-print(local_mat_sympy)
+#local_mat_sympy = eval_elemental_matrix(hx,hy,pol_degree=1)
 
 # Assembly of discretised bilinear form. Precisely below block places the elemental_matrix into global matrix based on global index of the node. Notice the advantage of symmetry during assembly.
 a_matrix2 = np.zeros([nx*ny,nx*ny]) # a_matrix is global bilinear matrix
